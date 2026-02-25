@@ -14,16 +14,18 @@ bot.command('about', about());
 // 2. NEW: Only welcome new members
 bot.on('new_chat_members', async (ctx) => {
     const newUser = ctx.message.new_chat_members[0];
-    const name = newUser.first_name;
+    
+    // This creates a clickable link to the user's profile
+    const userMention = `<a href="tg://user?id=${newUser.id}">${newUser.first_name}</a>`;
 
     const welcomeMessage = 
-`Hello ${name}, Welcome to Cosmonauts by Roscosmos. 
+`<b>Hello ${userMention} Welcome to Cosmonauts by Roscosmos.</b>
 
 Here we explore Aliens, UFOs, Space, Underwater mysteries and unexplained phenomena that refuse to be explained. we explore it all together. 👽❤
 
-> Look, @Awoks_x2 ! Our Roscosmos Team just gained a new space buddy.`;
+<blockquote>Look, @Awoks_x2 ! Our Roscosmos Team just gained a new space buddy.</blockquote>`;
 
-    await ctx.replyWithMarkdownV2(welcomeMessage.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1'));
+    await ctx.replyWithHTML(welcomeMessage);
 });
 
 // 3. REMOVED: bot.on('message', greeting()) is gone so it stays silent during chat
